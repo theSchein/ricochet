@@ -36,7 +36,7 @@ dag = DAG("ricochet_distribute",
           max_active_runs=1,
           catchup=False,
           default_args=default_args,
-          schedule_interval="20 * * * *")
+          schedule_interval="30 * * * *")
 
 web3 = Web3Hook(web3_conn_id='infura').http_client
 current_nonce = web3.eth.getTransactionCount(DISTRIBUTOR_WALLET_ADDRESS)
@@ -52,7 +52,7 @@ for nonce_offset, exchange_address in enumerate(EXCHANGE_ADDRESSES):
         task_id="distribute_" + exchange_address,
         web3_conn_id="infura",
         ethereum_wallet=DISTRIBUTOR_WALLET_ADDRESS,
-        gas_multiplier=2,
+        gas_multiplier=1,
         contract_address=exchange_address,
         nonce=current_nonce + nonce_offset,
         dag=dag
