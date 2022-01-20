@@ -53,6 +53,7 @@ for nonce_offset, exchange_address in enumerate(EXCHANGE_ADDRESSES):
         web3_conn_id="infura",
         ethereum_wallet=DISTRIBUTOR_WALLET_ADDRESS,
         gas_multiplier=1,
+        gas=3000000,
         contract_address=exchange_address,
         nonce=current_nonce + nonce_offset,
         dag=dag
@@ -64,7 +65,7 @@ for nonce_offset, exchange_address in enumerate(EXCHANGE_ADDRESSES):
         transaction_hash="{{task_instance.xcom_pull(task_ids='distribute_" + exchange_address + "')}}",
         confirmations=1,
         poke_interval=5,
-        timeout=60 * 3,
+        timeout=60 * 20,
         dag=dag
     )
 
